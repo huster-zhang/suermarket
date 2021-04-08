@@ -40,7 +40,6 @@ export default {
       click: true,
       probeType: this.probeType,
       pullUpLoad: this.pullUpLoad,
-      // observeDOM: true
     });
 
     // console.log(this.scroll);
@@ -56,7 +55,6 @@ export default {
     // 3.监听scroll滚动到底部
     if (this.pullUpLoad) {
       this.scroll.on("pullingUp", () => {
-        // console.log('到底了');
         this.$emit("pullingUp");
       });
     }
@@ -70,14 +68,13 @@ export default {
     // ES6中可以直接给形参赋值传进去
     // scrollTo(x,y,time=300){ }
     scrollTo(x, y, time = 300) {
-      // this.scroll.scrollTo(x, y, time);
       this.scroll && this.scroll.scrollTo(x, y, time);
     },
     refresh() {
       this.scroll && this.scroll.refresh();
     },
     finishPullUp() {
-      this.scroll.finishPullUp();
+      this.scroll && this.scroll.finishPullUp();
     },
     getScrollY() {
       return this.scroll ? this.scroll.y : 0;
@@ -86,5 +83,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>

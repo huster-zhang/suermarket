@@ -1,8 +1,7 @@
 <template>
-<!-- 
+  <!-- 
   tabbar 这个文件夹中的两个东西，在多个项目都可以使用，所以放到common文件夹
 -->
-
 
   <!--  
   都写在这里显得逻辑太过复杂，tabbar只管好自己的逻辑就行，tabbar只负责自己的东西和样式，不关心item的，
@@ -17,16 +16,16 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
 #tab-bar {
   display: flex;
-  background-color: #f7f5f7;
+  background-color: #f6f6f6;
 
   position: fixed;
-  right: 0;
   left: 0;
+  right: 0;
   bottom: 0;
 
-  box-shadow: 0px -1px 1px rgba(100, 100, 100, 0.1);
+  box-shadow: 0 -1px 1px rgba(100, 100, 100, 0.2);
 }
 </style>

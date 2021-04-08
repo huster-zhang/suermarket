@@ -5,20 +5,20 @@
 </template>
 
 <script>
-export default {
-
-}
+  export default {
+    name: "BackTop"
+  }
 </script>
 
 <style scoped>
-.back-top{
-  position: fixed;
-  right: 8px;
-  bottom:55px;
-}
+  .back-top {
+    position: fixed;
+    right: 8px;
+    bottom: 55px;
+  }
 
-.back-top img{
-  height: 43px;
-  width: 43px;
-}
+  .back-top img {
+    width: 43px;
+    height: 43px;
+  }
 </style>

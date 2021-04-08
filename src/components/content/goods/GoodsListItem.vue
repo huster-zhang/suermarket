@@ -1,10 +1,10 @@
 <template>
   <div class="goods-item" @click="itemClick">
-    <img :src="goodsItem.show.img" alt="" @load="imageLoad" />
+    <img :src="showImage" alt="" @load="imageLoad">
     <div class="goods-info">
-      <p>{{ goodsItem.title }}</p>
-      <span class="price">{{ goodsItem.price }}</span>
-      <span class="collect">{{ goodsItem.cfav }}</span>
+      <p>{{goodsItem.title}}</p>
+      <span class="price">{{goodsItem.price}}</span>
+      <span class="collect">{{goodsItem.cfav}}</span>
     </div>
   </div>
 </template>
@@ -15,31 +15,44 @@ export default {
     goodsItem: {
       type: Object,
       default() {
-        return [];
+        return {};
       },
     },
   },
+  computed: {
+    showImage(){
+      return this.goodsItem.image || this.goodsItem.show.img
+    }
+  },
   // 监听图片是否加载完成
   methods: {
-    imageLoad(){
+    imageLoad() {
       // console.log('imageLoad');
       // 发射出去这个事件
-      this.$bus.$emit('itemImageLoad')
+       this.$bus.$emit("itemImageLoad");
+
+      // 详情页每次刷新也会提交到首页这个事件，这样是不合适的所以通过这样的方法判断是哪里传递的命令
+      /* if (this.$route.path.indexOf('/home')) {
+        this.$bus.$emit("homeItemImageLoad");
+      }else if (this.$route.path.indexOf('/detail')) {
+        this.$bus.$emit("detailItemImageLoad");
+      } */
+
     },
-    itemClick(){
-      this.$router.push('/detail/'+this.goodsItem.iid)
+    itemClick() {
+      this.$router.push("/detail/" + this.goodsItem.iid);
 
       /* this.$router.push({
         path:'/detail',
         query:{
         }
       }) */
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style>
+<style scoped>
 .goods-item {
   padding-bottom: 40px;
   position: relative;

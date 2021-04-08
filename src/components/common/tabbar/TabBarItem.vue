@@ -48,9 +48,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .tab-bar-item {
-  /* 均等分 */
   flex: 1;
   text-align: center;
   height: 49px;
@@ -61,12 +60,7 @@ export default {
   width: 24px;
   height: 24px;
   margin-top: 3px;
-  /* 基线，图片默认下面有3px */
   vertical-align: middle;
   margin-bottom: 2px;
 }
-
-/* .active {
-  color: red;
-} */
 </style>

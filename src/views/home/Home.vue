@@ -45,10 +45,11 @@ import Scroll from "components/common/scroll/Scroll";
 import BackTop from "components/content/backTop/BackTop";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
-import { debounce } from "common/utils";
+import {itemListenerMixin} from 'common/mixin'
 
 export default {
   name: "Home",
+  mixins:[itemListenerMixin],
   data() {
     return {
       // result: null,
@@ -64,6 +65,7 @@ export default {
       tabOffseTop: 0,
       isTabFixed: false,
       saveY: 0,
+      
     };
   },
   computed: {
@@ -93,7 +95,12 @@ export default {
 
   },
   deactivated() {
+    // 1.保存Y值
     this.saveY=this.$refs.scroll.getScrollY()
+
+    // 2.取消全局事件的监听
+    // 这里还需要传入对应函数，取消的哪个函数，所以要对下面的函数进行封装
+    this.$bus.$off('itemImageLoad',this.itemImageListener)
   },
   created() {
     console.log("创建Home");
@@ -122,10 +129,15 @@ export default {
   },
   mounted() {
     // 1.图片加载完成的 时间监听
-    const refresh = debounce(this.$refs.scroll.refresh, 50);
-    this.$bus.$on("itemImageLoad", () => {
+   /*  let refresh = debounce(this.$refs.scroll.refresh, 50);
+    this.itemImageListener=() => {
       refresh();
-    });
+    }
+    this.$bus.$on("itemImageLoad", this.itemImageListener); */
+
+    /* this.$bus.$on("itemImageLoad", () => {
+      refresh();
+    }); */
 
     // 2.获取tabControl的offsetTop
     // 所有的组件都有一个属性$el:用于获取组件中的元素
@@ -198,6 +210,7 @@ export default {
       // 复用代码的时候需要页码加1
       const page = this.goods[type].page + 1;
       getHomeGoods(type, page).then((res) => {
+        // 这里可以通过遍历一个一个将数据添加到goods里面
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1;
 
