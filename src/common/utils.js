@@ -1,4 +1,4 @@
-export function debounce(func, delay) {
+export function debounce(func, delay=50) {
   let timer = null;//闭包，timer不被销毁
 
   // ...args 意味着这里传参数可以不止传递一个

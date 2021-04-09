@@ -42,14 +42,15 @@ import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
 import Scroll from "components/common/scroll/Scroll";
-import BackTop from "components/content/backTop/BackTop";
+
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
-import {itemListenerMixin} from 'common/mixin'
+import {itemListenerMixin,backTopMixin} from 'common/mixin'
+
 
 export default {
   name: "Home",
-  mixins:[itemListenerMixin],
+  mixins:[itemListenerMixin,backTopMixin],
   data() {
     return {
       // result: null,
@@ -61,11 +62,9 @@ export default {
         sell: { page: 0, list: [] },
       },
       currentType: "pop",
-      isShowBackTop: false,
       tabOffseTop: 0,
       isTabFixed: false,
-      saveY: 0,
-      
+      saveY: 0, 
     };
   },
   computed: {
@@ -81,7 +80,6 @@ export default {
     TabControl,
     GoodsList,
     Scroll,
-    BackTop,
   },
   destroyed() {
     console.log("销毁");
@@ -90,9 +88,7 @@ export default {
     console.log('actived');
     // 不写这个刷新偶尔会出现不能滚动的现象
     this.$refs.scroll.refresh()
-    
     this.$refs.scroll.scrollTo(0,this.saveY,0)
-
   },
   deactivated() {
     // 1.保存Y值
@@ -166,16 +162,12 @@ export default {
       this.$refs.tabControl1.currentIndex = index;
       this.$refs.tabControl2.currentIndex = index;
     },
-    backClick() {
-      // this.$refs.scroll拿到了这个组件对象，直接访问里面的方法
-      // this.$refs.scroll.scroll.scrollTo(0,0,500)  封装进去方法
-      this.$refs.scroll.scrollTo(0, 0);
-    },
+
     contentScroll(position) {
       // console.log(position);
       // console.log("111");
       // 1.判断BackYop是否显示
-      this.isShowBackTop = -position.y > 1000;
+      this.listenShowBackTip(position) 
 
       // 2.决定tabControl是否吸顶(position:fixed)
       this.isTabFixed = -position.y > this.tabOffseTop;

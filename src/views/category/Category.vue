@@ -111,9 +111,11 @@
 </template>
 
 <script>
+import {  backTopMixin } from "common/mixin";
 import BScroll from "better-scroll";
 export default {
   name: "Category",
+  mixins:[backTopMixin],
   data() {
     return {
       scroll: null,
@@ -137,6 +139,7 @@ export default {
     this.scroll = new BScroll(this.$refs.aaa, {
       probeType: 3,
       pullUpLoad: true,
+      click:true
     });
     this.scroll.on("scroll", (position) => {
       console.log(position);
@@ -165,6 +168,6 @@ export default {
   background-color: #bfa;
 
   overflow: hidden;
-  /* overflow-y:scroll ; */
+  overflow-y:scroll ;
 }
 </style>

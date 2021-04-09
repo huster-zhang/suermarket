@@ -42,9 +42,13 @@ export default {
       // 判断, 所有的图片都加载完了, 那么进行一次回调就可以了(若是没有进行判断，那么有几张图片就是回调几次).
       // 跟之前轮播图只加载一张图片不一样，这里是所有图片都会影响到滚动区域
       // if (++this.counter === this.detailInfo.detailImage[0].list.length) {
-      if (++this.counter === this.imagesLength) {
+      /* if (++this.counter === this.imagesLength) {
+        console.log("111");
         this.$emit("imageLoad");
-      }
+        // 也可以通过事件总线发出
+      } */
+
+      this.$emit("imageLoad");
     },
   },
   // 监听某个属性的变化
